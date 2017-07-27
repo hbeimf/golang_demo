@@ -1,4 +1,6 @@
+运行demo
 
+```
 $ cd HttpServer
 
 $ make
@@ -10,12 +12,15 @@ $ ./HttpServer
 
 
 $ go run WebsocketClient.go
-
+```
 
 依赖环境 ：
 
-    redis
-    mysql
+```
+redis
+mysql
+```
 
 
+mysqldump -uroot -p test users > /web/golang_demo/test_users.sql
 

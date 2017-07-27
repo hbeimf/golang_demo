@@ -28,6 +28,7 @@ var (
 )
 
 func main() {
+    flag.Parse()
 
     ctrl := controller.GetControllerInstance()
 

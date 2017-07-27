@@ -25,6 +25,7 @@ var upgrader = websocket.Upgrader{} // use default options
 var ControllerInstance *Controller
 
 func init() {
+    flag.Parse()
 
     redis := model.NewRedisPool(*globalRedisHost, 0)
     ControllerInstance = &Controller{redis}

@@ -20,6 +20,7 @@ import (
     "flag"
     "net/http"
     "./controller"
+    "./model"
 )
 
 // 设置全局配置变量，并带默认值
@@ -29,6 +30,9 @@ var (
 
 func main() {
     flag.Parse()
+
+    // rabbitmq 消费者
+    go model.RabbitReceiveLogs()
 
     ctrl := controller.GetControllerInstance()
 

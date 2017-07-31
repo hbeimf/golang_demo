@@ -1,10 +1,5 @@
 package controller
 
-
-// import (
-//     "../controller"
-// )
-
 // https://www.ctolib.com/gods.html
 
 
@@ -34,28 +29,43 @@ type Hub struct {
 }
 
 
-var hub *Hub
+// var hub *Hub
 
-// var hubList []Hub
+// 每个场景对应一个　k/v ，　k指hub的hub_name，　v对应hub的指针.
+// 客户端切换场景啥的，后面再慢慢实现
 var hubList map[string]*Hub
 
 func init() {
-    var hub_name = "main_hub"
-    hub = newHub(hub_name)
-    hubList[hub_name] = hub
-    hub.run()
+    var hub_name = "default_hub"
+    newHub(hub_name)
+    // hubList[hub_name] = hub
+    // hub.run()
 }
 
 
-func newHub(name string) *Hub {
-    return &Hub{
+func newHub(name string) {
+    hub := &Hub{
         hub_name: name,
         broadcast:  make(chan []byte),
         register:   make(chan *Client),
         unregister: make(chan *Client),
         clients:    make(map[*Client]bool),
     }
+
+    hubList[name] = hub
+
+    hub.run()
 }
+
+// func newHub(name string) *Hub {
+//     return &Hub{
+//         hub_name: name,
+//         broadcast:  make(chan []byte),
+//         register:   make(chan *Client),
+//         unregister: make(chan *Client),
+//         clients:    make(map[*Client]bool),
+//     }
+// }
 
 func (h *Hub) run() {
     for {

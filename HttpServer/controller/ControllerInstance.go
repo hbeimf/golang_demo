@@ -2,13 +2,8 @@ package controller
 
 
 import (
-    "flag"
+    // "flag"
     "../model"
-)
-
-
-var (
-    globalRedisHost = flag.String("globalRedisHost", "127.0.0.1:6379", "redis服务监听主机端口")
 )
 
 
@@ -19,9 +14,7 @@ type Controller struct {
 var ControllerInstance *Controller
 
 func init() {
-    flag.Parse()
-
-    redis := model.NewRedisPool(*globalRedisHost, 0)
+    redis := model.RedisClient
     ControllerInstance = &Controller{redis}
 }
 

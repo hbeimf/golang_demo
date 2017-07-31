@@ -34,6 +34,11 @@ func main() {
     // rabbitmq 消费者
     go model.RabbitReceiveLogs()
 
+    // redis 消费者
+    go model.RedisClient.RedisSub("channel100")
+    go model.RedisClient.RedisSub("channel100")
+
+
     ctrl := controller.GetControllerInstance()
 
     // 注册控制器函数

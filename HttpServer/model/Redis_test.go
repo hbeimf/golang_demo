@@ -2,48 +2,45 @@ package model
 
 import (
     "testing"
-    // "fmt"
 )
 
-var obj = NewRedisPool("127.0.0.1:6379", 0)
-
 func TestGet(t *testing.T) {
-    val, err := obj.RedisGet("key1122")
+    val, err := RedisClient.RedisGet("key1122")
     t.Log("getXXX", val, err)
 }
 
 func TestSetGet(t *testing.T) {
-    obj.RedisSet("key100", "value_100")
+    RedisClient.RedisSet("key100", "value_100")
 
-    val, err := obj.RedisGet("key100")
+    val, err := RedisClient.RedisGet("key100")
     t.Log("设置", val, err)
 }
 
 
 func TestLPush(t *testing.T) {
     listName := "list100"
-    obj.RedisLPush(listName, "value222")
-    res, err := obj.RedisRPop(listName)
+    RedisClient.RedisLPush(listName, "value222")
+    res, err := RedisClient.RedisRPop(listName)
     t.Log("队列左进右出", res, err)
 }
 
 
 
 func TestSetNX(t *testing.T) {
-    obj.RedisSetNX("key1000", "value_1000")
+    RedisClient.RedisSetNX("key1000", "value_1000")
 
-    obj.RedisEXPIRE("key1000", 30)
+    RedisClient.RedisEXPIRE("key1000", 30)
 }
 
 
 func TestPubSub(t *testing.T) {
     channle := "test_channel"
-    go obj.RedisSub(channle)
-    go obj.RedisSub(channle)
-    go obj.RedisSub(channle)
+    go RedisClient.RedisSub(channle)
+    go RedisClient.RedisSub(channle)
+    go RedisClient.RedisSub(channle)
 
     msg := "test msg !!!XXXXX"
-    obj.RedisPublish(channle, msg)
+    RedisClient.RedisPublish(channle, msg)
 
 }
 

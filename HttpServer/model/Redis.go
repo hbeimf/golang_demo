@@ -7,16 +7,28 @@ import (
     "time"
     // "log"
     "fmt"
+    "flag"
 )
 
 type Redis struct {
     pool *redis.Pool
 }
 
+var (
+    globalRedisHost = flag.String("globalRedisHost", "127.0.0.1:6379", "redis服务监听主机端口")
+)
+
+// 客户端连接实例　
+var RedisClient *Redis
+
+func init() {
+    flag.Parse()
+    RedisClient = newRedisPool(*globalRedisHost, 0)
+}
 
 
 // http://godoc.org/github.com/garyburd/redigo/redis#Pool
-func NewRedisPool(server string, num int) *Redis {
+func newRedisPool(server string, num int) *Redis {
 
     pool := &redis.Pool{
         MaxIdle:     10, //最大连接数

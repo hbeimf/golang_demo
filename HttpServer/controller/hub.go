@@ -38,8 +38,8 @@ var hubList map[string]*Hub
 func init() {
     hubList = make(map[string]*Hub)
 
-    var hub_name = "default_hub"
-    newHub(hub_name)
+    // var hub_name = "default_hub"
+    // newHub(hub_name)
     // hubList[hub_name] = hub
     // hub.run()
 }

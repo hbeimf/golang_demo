@@ -21,7 +21,6 @@ import (
     "net/http"
     "./controller"
     "./model"
-    // "./hub"
 )
 
 // 设置全局配置变量，并带默认值
@@ -34,9 +33,6 @@ func main() {
 
     // rabbitmq 消费者
     go model.RabbitReceiveLogs()
-    //hub
-    hub := controller.NewHub()
-    hub.Run()
 
     ctrl := controller.GetControllerInstance()
 

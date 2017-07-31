@@ -12,7 +12,7 @@ package controller
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// package main
+
 
 // hub maintains the set of active clients and broadcasts messages to the
 // clients.
@@ -30,7 +30,13 @@ type Hub struct {
     unregister chan *Client
 }
 
-func NewHub() *Hub {
+func init() {
+    hub := newHub()
+    hub.run()
+}
+
+
+func newHub() *Hub {
     return &Hub{
         broadcast:  make(chan []byte),
         register:   make(chan *Client),
@@ -39,7 +45,7 @@ func NewHub() *Hub {
     }
 }
 
-func (h *Hub) Run() {
+func (h *Hub) run() {
     for {
         select {
         case client := <-h.register:

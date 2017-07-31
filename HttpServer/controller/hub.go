@@ -56,6 +56,7 @@ func newHub(name string) {
 
     hubList[name] = hub
 
+    // 开启消息收发
     hub.run()
 }
 

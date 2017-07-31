@@ -65,6 +65,14 @@ func (this *Redis) RedisSet(key string, val string) {
     conn.Do("SET", key, val)
 }
 
+// 设置带超时的建　
+func (this *Redis) RedisSetEX(key string, val string, timeout string) {
+    conn := this.pool.Get()
+    defer conn.Close()
+
+    conn.Do("SET", key, val, "EX", timeout)
+}
+
 
 // 如果返回1设置成功
 // 返回0设置失败
@@ -129,8 +137,40 @@ func (this *Redis) RedisRPop(listName string) (string, error) {
 }
 
 
+// pub/sub
 
 
+// http://www.cnblogs.com/liughost/p/5008029.html
+// http://studygolang.com/articles/4542
+func (this *Redis) RedisSub(channel string) {
+    c := this.pool.Get()
+    psc := redis.PubSubConn{c}
+    // psc.PSubscribe("aa*")
+    psc.PSubscribe(channel)
+
+    for {
+        switch v := psc.Receive().(type) {
+        case redis.Subscription:
+            fmt.Printf("XXX %s: %s %d\n", v.Channel, v.Kind, v.Count)
+            fmt.Println("XXX %s: %s %d\n", v.Channel, v.Kind, v.Count)
+        case redis.Message://单个订阅subscribe
+            fmt.Printf("%s: XX message: %s\n", v.Channel, v.Data)
+            fmt.Println("%s: XX message: %s\n", v.Channel, v.Data)
+        case redis.PMessage://模式订阅psubscribe
+            fmt.Printf("X PMessage: %s %s %s\n", v.Pattern, v.Channel, v.Data)
+            fmt.Println("X PMessage: %s %s %s\n", v.Pattern, v.Channel, v.Data)
+        case error:
+            fmt.Println("error")
+        }
+    }
+}
+
+func (this *Redis) RedisPublish(channel string, msg string) error {
+    conn := this.pool.Get()
+    defer conn.Close()
+    _, err := conn.Do("PUBLISH", channel, msg)
+    return err
+}
 
 
 

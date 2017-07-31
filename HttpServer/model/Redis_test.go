@@ -36,4 +36,16 @@ func TestSetNX(t *testing.T) {
 }
 
 
+func TestPubSub(t *testing.T) {
+    channle := "test_channel"
+    go obj.RedisSub(channle)
+    go obj.RedisSub(channle)
+    go obj.RedisSub(channle)
+
+    msg := "test msg !!!XXXXX"
+    obj.RedisPublish(channle, msg)
+
+}
+
+
 

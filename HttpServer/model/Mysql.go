@@ -36,7 +36,7 @@ func mysqlEngine() (*xorm.Engine, error) {
 
 // 初始化包全局连接引擎 engine
 // 关联表结构
-func init_engine() {
+func init() {
     var err error
     engine, err = mysqlEngine()
     if err != nil {
@@ -46,6 +46,8 @@ func init_engine() {
     if err := engine.Sync2(new(Users)); err != nil {
         fmt.Println("Fail to sync struct to  table schema :", err)
     }
+
+    fmt.Println(" ============================ mysql init !! =============")
 }
 
 
@@ -66,12 +68,10 @@ func mysql_select(SelectSql string) ([]map[string]string) {
 // =================================
 // 验证查询函数， 输出查询结果
 func mysql_get() {
-    init_engine()
-
     // mysql_insert()
     // mysql_update()
 
-    mysql_delete()
+    // mysql_delete()
 
     Sql := "select * from users limit 10"
     rows := mysql_select(Sql)

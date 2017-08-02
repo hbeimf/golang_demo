@@ -20,17 +20,27 @@ func (this *Controller) GetHandler(w http.ResponseWriter, req *http.Request) {
     fmt.Println(val)
 
 
+    // redis demo
     this.redis.RedisSet("key1122", "val1XXXXX")
     val1, err := this.redis.RedisGet("key1122")
     if err == nil {
         fmt.Println(val1)
     }
 
-    // fmt.Println(val1)
+    // mysql demo
+    Sql := "select * from users limit 10"
+    rows := this.mysql.MysqlGet(Sql)
+    for k, v := range rows {
+        fmt.Printf("k=%v, v=%v\n", k, v)
+
+        fmt.Printf("k=%v, id=%v\n", k, v["id"])
+        fmt.Printf("k=%v, username=%v\n", k, v["username"])
+        fmt.Printf("k=%v, email=%v\n", k, v["email"])
+    }
 
 
 
-    fmt.Println("ok")
+    // fmt.Println("ok")
     // w.Write([]byte("get_handler"))
     w.Write([]byte(val))
 

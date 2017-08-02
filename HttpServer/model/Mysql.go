@@ -28,7 +28,7 @@ type Users struct {
 }
 
 
-var engine *xorm.Engine
+var mysqlClient *xorm.Engine
 
 func mysqlEngine() (*xorm.Engine, error) {
     return xorm.NewEngine("mysql", "root:123456@/test?charset=utf8")
@@ -38,12 +38,12 @@ func mysqlEngine() (*xorm.Engine, error) {
 // 关联表结构
 func init() {
     var err error
-    engine, err = mysqlEngine()
+    mysqlClient, err = mysqlEngine()
     if err != nil {
         fmt.Println(err)
     }
 
-    if err := engine.Sync2(new(Users)); err != nil {
+    if err := mysqlClient.Sync2(new(Users)); err != nil {
         fmt.Println("Fail to sync struct to  table schema :", err)
     }
 
@@ -55,7 +55,7 @@ func init() {
 func mysql_select(SelectSql string) ([]map[string]string) {
     reply := []map[string]string{}
 
-    results, err := engine.QueryString(SelectSql)
+    results, err := mysqlClient.QueryString(SelectSql)
 
     if err != nil {
         fmt.Println("err:", err)
@@ -96,7 +96,7 @@ func mysql_insert() {
         num int64
         err error
     )
-    if num, err = engine.Insert(users); err != nil {
+    if num, err = mysqlClient.Insert(users); err != nil {
         fmt.Printf("Fail to Insert Persons :", err)
 
     }
@@ -108,7 +108,7 @@ func mysql_delete() {
     var user Users
 
     username := "lucyxx"
-    affected, err := engine.Where("users.username = ?", username).Delete(&user)
+    affected, err := mysqlClient.Where("users.username = ?", username).Delete(&user)
 
     if err != nil {
         fmt.Printf("Error to delete user err: ", err)
@@ -122,7 +122,7 @@ func mysql_delete() {
 func mysql_update() {
     username := "lucyxx"
     email := "123456@qq.com"
-    affected, err := engine.Exec("update users set username = ? where email = ?", username, email)
+    affected, err := mysqlClient.Exec("update users set username = ? where email = ?", username, email)
 
     if err != nil {
         fmt.Printf("Succ to update user err: ", err)

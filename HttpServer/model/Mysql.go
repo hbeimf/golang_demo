@@ -32,7 +32,7 @@ type Mysql struct {
     engine *xorm.Engine
 }
 
-var mysqlClient *Mysql
+var MysqlClient *Mysql
 
 func mysqlEngine() (*xorm.Engine, error) {
     return xorm.NewEngine("mysql", "root:123456@/test?charset=utf8")
@@ -47,7 +47,7 @@ func init() {
         fmt.Println(err)
     }
 
-    mysqlClient = &Mysql{
+    MysqlClient = &Mysql{
         engine,
     }
 
@@ -82,7 +82,7 @@ func mysql_get() {
 
     Sql := "select * from users limit 10"
     // rows := mysql_select(Sql)
-    rows := mysqlClient.MysqlGet(Sql)
+    rows := MysqlClient.MysqlGet(Sql)
     for k, v := range rows {
         fmt.Printf("k=%v, v=%v\n", k, v)
 
@@ -97,7 +97,7 @@ func mysql_get() {
 // func mysql_select(SelectSql string) ([]map[string]string) {
 //     reply := []map[string]string{}
 
-//     results, err := mysqlClient.QueryString(SelectSql)
+//     results, err := MysqlClient.QueryString(SelectSql)
 
 //     if err != nil {
 //         fmt.Println("err:", err)
@@ -115,7 +115,7 @@ func mysql_get() {
 //         num int64
 //         err error
 //     )
-//     if num, err = mysqlClient.Insert(users); err != nil {
+//     if num, err = MysqlClient.Insert(users); err != nil {
 //         fmt.Printf("Fail to Insert Persons :", err)
 
 //     }
@@ -127,7 +127,7 @@ func mysql_get() {
 //     var user Users
 
 //     username := "lucyxx"
-//     affected, err := mysqlClient.Where("users.username = ?", username).Delete(&user)
+//     affected, err := MysqlClient.Where("users.username = ?", username).Delete(&user)
 
 //     if err != nil {
 //         fmt.Printf("Error to delete user err: ", err)
@@ -141,7 +141,7 @@ func mysql_get() {
 // func mysql_update() {
 //     username := "lucyxx"
 //     email := "123456@qq.com"
-//     affected, err := mysqlClient.Exec("update users set username = ? where email = ?", username, email)
+//     affected, err := MysqlClient.Exec("update users set username = ? where email = ?", username, email)
 
 //     if err != nil {
 //         fmt.Printf("Succ to update user err: ", err)

@@ -9,13 +9,18 @@ import (
 
 type Controller struct {
     redis *model.Redis
+    mysql *model.Mysql
 }
 
 var ControllerInstance *Controller
 
 func init() {
     redis := model.RedisClient
-    ControllerInstance = &Controller{redis}
+    mysql := model.MysqlClient
+    ControllerInstance = &Controller{
+        redis,
+        mysql,
+    }
 }
 
 

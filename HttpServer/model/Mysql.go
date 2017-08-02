@@ -28,7 +28,11 @@ type Users struct {
 }
 
 
-var mysqlClient *xorm.Engine
+type Mysql struct {
+    engine *xorm.Engine
+}
+
+var mysqlClient *Mysql
 
 func mysqlEngine() (*xorm.Engine, error) {
     return xorm.NewEngine("mysql", "root:123456@/test?charset=utf8")
@@ -37,25 +41,28 @@ func mysqlEngine() (*xorm.Engine, error) {
 // 初始化包全局连接引擎 engine
 // 关联表结构
 func init() {
-    var err error
-    mysqlClient, err = mysqlEngine()
+    // var err error
+    engine, err := mysqlEngine()
     if err != nil {
         fmt.Println(err)
     }
 
-    if err := mysqlClient.Sync2(new(Users)); err != nil {
+    mysqlClient = &Mysql{
+        engine,
+    }
+
+    if err := engine.Sync2(new(Users)); err != nil {
         fmt.Println("Fail to sync struct to  table schema :", err)
     }
 
     fmt.Println(" ============================ mysql init !! =============")
 }
 
-
 // 查询一条sql
-func mysql_select(SelectSql string) ([]map[string]string) {
+func (this *Mysql) MysqlGet(SelectSql string) ([]map[string]string) {
     reply := []map[string]string{}
 
-    results, err := mysqlClient.QueryString(SelectSql)
+    results, err := this.engine.QueryString(SelectSql)
 
     if err != nil {
         fmt.Println("err:", err)
@@ -65,8 +72,8 @@ func mysql_select(SelectSql string) ([]map[string]string) {
     return results
 }
 
-// =================================
-// 验证查询函数， 输出查询结果
+// // =================================
+// // 验证查询函数， 输出查询结果
 func mysql_get() {
     // mysql_insert()
     // mysql_update()
@@ -74,7 +81,8 @@ func mysql_get() {
     // mysql_delete()
 
     Sql := "select * from users limit 10"
-    rows := mysql_select(Sql)
+    // rows := mysql_select(Sql)
+    rows := mysqlClient.MysqlGet(Sql)
     for k, v := range rows {
         fmt.Printf("k=%v, v=%v\n", k, v)
 
@@ -82,53 +90,64 @@ func mysql_get() {
         fmt.Printf("k=%v, username=%v\n", k, v["username"])
         fmt.Printf("k=%v, email=%v\n", k, v["email"])
     }
-
-
 }
 
 
+// 查询一条sql
+// func mysql_select(SelectSql string) ([]map[string]string) {
+//     reply := []map[string]string{}
 
-// 插入测试数据
-func mysql_insert() {
-    users := []Users{Users{UserName: "lucy", Email:"123456@qq.com"}, Users{UserName: "lily", Email:"78910@qq.com"}}
+//     results, err := mysqlClient.QueryString(SelectSql)
 
-    var (
-        num int64
-        err error
-    )
-    if num, err = mysqlClient.Insert(users); err != nil {
-        fmt.Printf("Fail to Insert Persons :", err)
+//     if err != nil {
+//         fmt.Println("err:", err)
+//         return reply
+//     }
 
-    }
-    fmt.Printf("Succ to insert person number : %d\n", num)
-}
+//     return results
+// }
 
+// // 插入测试数据
+// func mysql_insert() {
+//     users := []Users{Users{UserName: "lucy", Email:"123456@qq.com"}, Users{UserName: "lily", Email:"78910@qq.com"}}
 
-func mysql_delete() {
-    var user Users
+//     var (
+//         num int64
+//         err error
+//     )
+//     if num, err = mysqlClient.Insert(users); err != nil {
+//         fmt.Printf("Fail to Insert Persons :", err)
 
-    username := "lucyxx"
-    affected, err := mysqlClient.Where("users.username = ?", username).Delete(&user)
-
-    if err != nil {
-        fmt.Printf("Error to delete user err: ", err)
-    }
-
-    fmt.Printf("Succ to delete user number : %d\n", affected)
-
-}
+//     }
+//     fmt.Printf("Succ to insert person number : %d\n", num)
+// }
 
 
-func mysql_update() {
-    username := "lucyxx"
-    email := "123456@qq.com"
-    affected, err := mysqlClient.Exec("update users set username = ? where email = ?", username, email)
+// func mysql_delete() {
+//     var user Users
 
-    if err != nil {
-        fmt.Printf("Succ to update user err: ", err)
-    }
+//     username := "lucyxx"
+//     affected, err := mysqlClient.Where("users.username = ?", username).Delete(&user)
 
-    fmt.Printf("Succ to update user number : %d\n", affected)
-}
+//     if err != nil {
+//         fmt.Printf("Error to delete user err: ", err)
+//     }
+
+//     fmt.Printf("Succ to delete user number : %d\n", affected)
+
+// }
+
+
+// func mysql_update() {
+//     username := "lucyxx"
+//     email := "123456@qq.com"
+//     affected, err := mysqlClient.Exec("update users set username = ? where email = ?", username, email)
+
+//     if err != nil {
+//         fmt.Printf("Succ to update user err: ", err)
+//     }
+
+//     fmt.Printf("Succ to update user number : %d\n", affected)
+// }
 
 

@@ -38,8 +38,8 @@ var hubList map[string]*Hub
 func init() {
     hubList = make(map[string]*Hub)
 
-    // var hub_name = "default_hub"
-    // newHub(hub_name)
+    var hub_name = "default_hub"
+    newHub(hub_name)
     // hubList[hub_name] = hub
     // hub.run()
 }
@@ -56,8 +56,8 @@ func newHub(name string) {
 
     hubList[name] = hub
 
-    // 开启消息收发
-    hub.run()
+    // 开启消息收发, 这里得做成一个异步的协程，不然死循环会一直阻塞，
+    go hub.run()
 }
 
 // func newHub(name string) *Hub {

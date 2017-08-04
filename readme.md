@@ -17,6 +17,7 @@ $ go run WebsocketClient.go
 依赖环境 ：
 
 ```
+rabbitmq
 redis
 mysql
 ```

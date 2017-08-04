@@ -47,6 +47,9 @@ func main() {
 
     // websocket echo demo
     http.HandleFunc("/websocket", ctrl.WebsocketHandler)
+    //聊天室　demo
+    http.HandleFunc("/chat", ctrl.ChatHandler)
+
 
     err := http.ListenAndServe(*globalHttpHost, nil)
     if err != nil {

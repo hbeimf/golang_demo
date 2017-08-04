@@ -122,12 +122,15 @@ func (c *Client) writePump() {
 }
 
 // serveWs handles websocket requests from the peer.
-func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
+func (this *Controller) ChatHandler(w http.ResponseWriter, r *http.Request) {
     conn, err := upgrader.Upgrade(w, r, nil)
     if err != nil {
         log.Println(err)
         return
     }
+
+    hub := hubList["default_chat_hub"]
+
     client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
     client.hub.register <- client
 

@@ -3,14 +3,10 @@ package controller
 // https://www.ctolib.com/gods.html
 
 
-// Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
-
 
 // hub maintains the set of active clients and broadcasts messages to the
 // clients.
+// hub结构作为一个聊天室结构，用于给在clients　哈希列表内的客户端广播信息。
 type Hub struct {
     // hub　名称, 用于区分不同的 hub
     hub_name string
@@ -28,20 +24,16 @@ type Hub struct {
     unregister chan *Client
 }
 
-
-// var hub *Hub
-
 // 每个场景对应一个　k/v ，　k指hub的hub_name，　v对应hub的指针.
-// 客户端切换场景啥的，后面再慢慢实现
+// 客户端切换场景啥的，后面再慢慢实现，所有的聊天室哈希列表
 var hubList map[string]*Hub
 
 func init() {
     hubList = make(map[string]*Hub)
 
-    var hub_name = "default_hub"
+    // 初始化第一个默认的聊天室
+    var hub_name = "default_chat_hub"
     newHub(hub_name)
-    // hubList[hub_name] = hub
-    // hub.run()
 }
 
 
@@ -64,16 +56,7 @@ func newHub(name string) {
     }
 }
 
-// func newHub(name string) *Hub {
-//     return &Hub{
-//         hub_name: name,
-//         broadcast:  make(chan []byte),
-//         register:   make(chan *Client),
-//         unregister: make(chan *Client),
-//         clients:    make(map[*Client]bool),
-//     }
-// }
-
+// 每个聊天室用来异步接收和广播消息的进程　
 func (h *Hub) run() {
     for {
         select {

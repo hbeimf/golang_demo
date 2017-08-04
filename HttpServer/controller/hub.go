@@ -46,18 +46,22 @@ func init() {
 
 
 func newHub(name string) {
-    hub := &Hub{
-        hub_name: name,
-        broadcast:  make(chan []byte),
-        register:   make(chan *Client),
-        unregister: make(chan *Client),
-        clients:    make(map[*Client]bool),
+    // 判断hub是否已经存在，如不存在则创建新hub
+
+    if _, ok := hubList[name]; !ok {
+        hub := &Hub{
+            hub_name: name,
+            broadcast:  make(chan []byte),
+            register:   make(chan *Client),
+            unregister: make(chan *Client),
+            clients:    make(map[*Client]bool),
+        }
+
+        hubList[name] = hub
+
+        // 开启消息收发, 这里得做成一个异步的协程，不然死循环会一直阻塞，
+        go hub.run()
     }
-
-    hubList[name] = hub
-
-    // 开启消息收发, 这里得做成一个异步的协程，不然死循环会一直阻塞，
-    go hub.run()
 }
 
 // func newHub(name string) *Hub {

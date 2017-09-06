@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	ConstHeader         = "www.01happy.com"
-	ConstHeaderLength   = 15
+	ConstHeader         = "msg"
+	ConstHeaderLength   = 3
 	ConstSaveDataLength = 4
 )
 

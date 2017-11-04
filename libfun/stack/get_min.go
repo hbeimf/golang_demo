@@ -71,6 +71,8 @@ func Test() {
 	min.Push(1)
 	min.Push(2)
 	min.Push(3)
+	min.Push(2)
+
 
 	// fmt.Println("stack:", min)
 

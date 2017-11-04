@@ -1,13 +1,20 @@
 package stack
 
 import (
-	lls "github.com/emirpasic/gods/stacks/linkedliststack"
+	llstack "github.com/emirpasic/gods/stacks/linkedliststack"
+	"fmt"
 )
 
+type Min struct {
+	top llstack.Stack
+	min_top llstack.Stack
+}
+
 func Test() {
-	stack := lls.New()  // empty
+	stack := llstack.New()  // empty
 	stack.Push(1)       // 1
 	stack.Push(2)       // 1, 2
+	fmt.Println("val", stack.Values())
 	stack.Values()      // 2, 1 (LIFO order)
 	_, _ = stack.Peek() // 2,true
 	_, _ = stack.Pop()  // 2, true

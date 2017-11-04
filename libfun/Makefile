@@ -6,6 +6,12 @@ main:
 	@GOPATH=$(GOPATH) go get -d
 	@GOPATH=$(GOPATH) go build -o $@
 
+run:
+	./main
+
+cc:
+	rm -rf ./main
+
 clean:
 	@GOPATH=$(GOPATH) go clean
 	@${RM} -r pkg/ src/

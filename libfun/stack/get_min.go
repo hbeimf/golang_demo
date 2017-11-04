@@ -79,7 +79,18 @@ func Test() {
 	// fmt.Println("stack:", min)
 
 	val, min_val := min.Pop()
+	fmt.Println("pop:", val, min_val)
 
+	val, min_val = min.Pop()
+	fmt.Println("pop:", val, min_val)
+
+	val, min_val = min.Pop()
+	fmt.Println("pop:", val, min_val)
+
+	val, min_val = min.Pop()
+	fmt.Println("pop:", val, min_val)
+
+	val, min_val = min.Pop()
 	fmt.Println("pop:", val, min_val)
 
 }

@@ -10,7 +10,7 @@ type Min struct {
 	min_top *llstack.Stack
 }
 
-func (self *Min) push(ele int32) {
+func (self *Min) Push(ele int32) {
 	fmt.Println(ele)
 
 	// set val
@@ -31,7 +31,7 @@ func (self *Min) push(ele int32) {
 	
 }
 
-func (self *Min) pop() (int32, int32) {
+func (self *Min) Pop() (int32, int32) {
 	val, _ := self.top.Pop()
 	min_val, _ := self.min_top.Pop()
 
@@ -60,13 +60,13 @@ func Test() {
 		min_top:llstack.New(),
 	}
 
-	min.push(1)
-	min.push(2)
-	min.push(3)
+	min.Push(1)
+	min.Push(2)
+	min.Push(3)
 
 	// fmt.Println("stack:", min)
 
-	val, min_val := min.pop()
+	val, min_val := min.Pop()
 
 	fmt.Println("pop:", val, min_val)
 

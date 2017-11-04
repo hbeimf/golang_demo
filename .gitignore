@@ -19,3 +19,4 @@ Mnesia*
 *pid
 .DS_Store
 HttpServer/HttpServer
+main

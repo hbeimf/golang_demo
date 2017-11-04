@@ -1,9 +1,12 @@
 package main
 
 import (
-	"./list"
+	// "./list"
+	"./stack"
 )
 
 func main() {
-	list.Test()
+	stack.Test()
+
+	
 }

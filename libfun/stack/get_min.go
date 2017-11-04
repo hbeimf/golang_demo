@@ -62,7 +62,7 @@ func Test() {
 	// stack.Empty()       // true
 	// stack.Size()        // 0
 
-	// min := &Min{
+	// min := &Min{  
 	// 	top: llstack.New(),
 	// 	min_top:llstack.New(),
 	// }
@@ -72,6 +72,8 @@ func Test() {
 	min.Push(2)
 	min.Push(3)
 	min.Push(2)
+	min.Push(5)
+
 
 
 	// fmt.Println("stack:", min)

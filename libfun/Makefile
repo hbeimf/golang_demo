@@ -1,8 +1,8 @@
 GOPATH := $(shell pwd)
 
-all: array_list
+all: main
 
-array_list:
+main:
 	@GOPATH=$(GOPATH) go get -d
 	@GOPATH=$(GOPATH) go build -o $@
 

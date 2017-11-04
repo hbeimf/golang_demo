@@ -1,11 +1,11 @@
-package main
+package list
 
 import (
 	"github.com/emirpasic/gods/lists/arraylist"
     	"github.com/emirpasic/gods/utils"
 )
 
-func main() {
+func Test() {
 	list := arraylist.New()
 	list.Add("a")                         // ["a"]
 	list.Add("c", "b")                    // ["a","c","b"]

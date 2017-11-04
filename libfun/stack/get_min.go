@@ -68,11 +68,12 @@ func Test() {
 	// }
 	min := NewStack()
 
-	min.Push(1)
-	min.Push(2)
 	min.Push(3)
 	min.Push(2)
 	min.Push(5)
+	min.Push(1)
+	min.Push(2)
+	
 
 
 

@@ -38,6 +38,13 @@ func (self *Min) Pop() (int32, int32) {
 	return val.(int32), min_val.(int32)
 }
 
+func NewStack()  *Min {
+	return &Min{
+		top: llstack.New(),
+		min_top:llstack.New(),
+	}
+}
+
 
 
 func Test() {
@@ -55,10 +62,11 @@ func Test() {
 	// stack.Empty()       // true
 	// stack.Size()        // 0
 
-	min := &Min{
-		top: llstack.New(),
-		min_top:llstack.New(),
-	}
+	// min := &Min{
+	// 	top: llstack.New(),
+	// 	min_top:llstack.New(),
+	// }
+	min := NewStack()
 
 	min.Push(1)
 	min.Push(2)

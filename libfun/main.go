@@ -3,11 +3,12 @@ package main
 import (
 	// "./list"
 	"./stack"
-	"./sort"
+	// "./sort"
 )
 
 func main() {
 	stack.Test()
-	sort.Test()
+	stack.TestGetMaxWindow()
+	// sort.Test()
 	
 }

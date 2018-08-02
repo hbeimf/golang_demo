@@ -12,6 +12,8 @@ thrift -r --gen erl call.thrift
 demo:
 
 https://studygolang.com/articles/9607
+cd /golang
+go get git.apache.org/thrift.git/lib/go/thrift
 
 在GOPATH [/golang/src] 下建项目 
 
@@ -36,6 +38,10 @@ git checkout 0.9.3
 
 ========================================================
 thrift install 
+
+download
+http://archive.apache.org/dist/thrift/
+
 0.10.0
 https://www.cnblogs.com/lanyangsh/p/9059894.html
 

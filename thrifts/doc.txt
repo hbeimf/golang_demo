@@ -1,0 +1,82 @@
+http://thrift.apache.org/tutorial/go
+
+Thrift version 0.9.3
+
+thrift -r --gen go tutorial.thrift
+
+thrift -r --gen go call.thrift
+
+thrift -r --gen erl call.thrift
+
+=====================================================
+demo:
+
+https://studygolang.com/articles/9607
+
+在GOPATH [/golang/src] 下建项目 
+
+thrift -r --gen go example.thrift
+
+
+==========================================================
+报错改进方法：
+../example/format_data.go:77:20: not enough arguments in call to oprot.Flush
+	have ()
+	want (context.Context)
+
+https://segmentfault.com/q/1010000014393259
+
+https://github.com/apache/thrift
+
+到GOPATH thrift目录下 然后
+cd /golang/src/git.apache.org/thrift.git/lib/go/thrift
+git checkout 0.9.3
+
+到GOPATH thrift目录下 然后git checkout 0.10.0
+
+========================================================
+thrift install 
+0.10.0
+https://www.cnblogs.com/lanyangsh/p/9059894.html
+
+thrift 最初是 facebook 开发使用的 rpc 通信框架，后来贡献给了 apache 基金会，出来得比较早，几乎支持所有的后端语言，使用非常广泛，是不可不知的一个网络框架。
+
+和 grpc 一样，需要先定义通信协议，然后实现自己业务逻辑。
+
+下面介绍其使用方法。
+
+下载go thrift 库
+$ go get git.apache.org/thrift.git/lib/go/thrift/...
+注意：此时的版本库时间是2017.7，因此当时不支持context。
+
+下载协议转换工具thrift
+$ wget http://www-us.apache.org/dist/thrift/0.10.0/thrift-0.10.0.tar.gz
+$ tar -xzvf thrift-0.10.tar.gz
+$ cd thrift-0.10.0
+$ ./configure  --prefix=/usr
+$ make -j8
+$ [sudo] make install 
+thrift工具安装过程中可能会报错，关于如何安装依赖，请参看Building Apache Thrift on CentOS 6.5.
+
+另外，一个问题，编译thrift时报错：
+
+GOPATH=pwd /home/lanyang/work/pkgs/go/bin/go get github.com/golang/mock/gomock
+package golang.org/x/net/context: unrecognized import path "golang.org/x/net/context" (https fetch: Get https://golang.org/x/net/context?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)
+
+网上各种方法都试过，无法搞定。
+
+根据报错提示，注释掉 test/go/Makefile 文件中
+
+#GOPATH=pwd $(GO) get github.com/golang/mock/gomock
+
+然后，手动下载gomock。
+由于gomock依赖net，所以先下载net。
+直接 go get golang.org/x/net 会失败，是由于被墙。
+可采用
+从https://github.com/golang/net下载(可以直接 go get github.com/golang/net)，然后把目录改成golang.org/x/net。
+
+完成net下载和配置后，接着下载mock
+
+$ go get github.com/golang/mock/gomock
+
+

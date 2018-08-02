@@ -4,7 +4,7 @@ import (
     "git.apache.org/thrift.git/lib/go/thrift"
     "net"
     "fmt"
-    "ThriftDemo/call"
+    "golang_demo/ThriftDemo/call"
     "log"
 )
 

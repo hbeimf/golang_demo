@@ -1,7 +1,7 @@
 package main
 
 import (
-    "ThriftDemo/call"
+    "golang_demo/ThriftDemo/call"
     "strings"
     "git.apache.org/thrift.git/lib/go/thrift"
     "fmt"

@@ -25,3 +25,9 @@ mysql
 
 mysqldump -uroot -p test users > /web/golang_demo/test_users.sql
 
+
+```
+$ mkdir -p /golang/src/golang_demo
+
+```
+

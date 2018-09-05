@@ -13,9 +13,7 @@ xdb: $(MAIN).go
 	go build -o $@
 
 run:
-	# ./GinDemo
 	go get -d
-	# go run ./GinDemo.go
 	go run ./$(MAIN).go
 
 

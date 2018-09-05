@@ -27,8 +27,12 @@ func Test() {
 	u, err := user.GetUser("test")
 
 	if err != nil {
-		fmt.Println("user:", u)
+		fmt.Println("err:", err)
 	}
+
+	fmt.Println("the user:", u.ID)
+	fmt.Println("the user:", u.Name)
+	fmt.Println("the user:", u.Email)
 
 }
 
@@ -50,7 +54,7 @@ var usercols = []string{"id", "name", "email", "password", "remember_token", "cr
 func (UserDao) GetUser(name string) (*models.Users, error) {
 	users := new(models.Users)
 	has, err := x.Cols(usercols...).Where("name = ?", name).Get(users)
-	fmt.Println("user123 :", has)
+	// fmt.Println("user123 :", users)
 	if err != nil {
 		return nil, err
 	}

@@ -13,6 +13,7 @@ GinDemo: GinDemo.go
 
 run:
 	# ./GinDemo
+	go get -d
 	go run ./GinDemo.go
 
 cc:

@@ -14,7 +14,9 @@ GinDemo: GinDemo.go
 run:
 	# ./GinDemo
 	go get -d
-	go run ./GinDemo.go
+	# go run ./GinDemo.go
+	go run ./GinJwt.go
+
 
 cc:
 	rm -rf ./GinDemo

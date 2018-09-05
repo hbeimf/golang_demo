@@ -19,11 +19,16 @@ var identityKey = "id"
 
 func helloHandler(c *gin.Context) {
 	claims := jwt.ExtractClaims(c)
+	log.Printf("Hello claims: %#v\n", claims)
 	user, _ := c.Get(identityKey)
+
+	log.Printf("Hello user: %#v\n", user)
+
 	c.JSON(200, gin.H{
 		"userID":   claims["id"],
 		"userName": user.(*User).UserName,
 		"text":     "Hello World.",
+		"uid": claims["Uid"],
 	})
 }
 
@@ -32,6 +37,7 @@ type User struct {
 	UserName  string
 	FirstName string
 	LastName  string
+	Uid  string
 }
 
 func main() {
@@ -53,16 +59,24 @@ func main() {
 		IdentityKey: identityKey,
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(*User); ok {
+				// 初始化 claims
 				return jwt.MapClaims{
 					identityKey: v.UserName,
+					"FirstName": v.FirstName,
+					"LastName": v.LastName,
+					"Uid": v.Uid,
 				}
 			}
 			return jwt.MapClaims{}
 		},
 		IdentityHandler: func(c *gin.Context) interface{} {
 			claims := jwt.ExtractClaims(c)
+			// 初始化 user 
 			return &User{
 				UserName: claims["id"].(string),
+				FirstName: claims["FirstName"].(string),
+				LastName: claims["LastName"].(string),
+				Uid: claims["Uid"].(string),
 			}
 		},
 		Authenticator: func(c *gin.Context) (interface{}, error) {
@@ -77,8 +91,9 @@ func main() {
 			if (userID == "admin" && password == "admin") || (userID == "test" && password == "test") {
 				return &User{
 					UserName:  userID,
-					LastName:  "Bo-Yi",
-					FirstName: "Wu",
+					LastName:  "Bo" + userID,
+					FirstName: "Wu" + userID,
+					Uid: "123456"+userID,
 				}, nil
 			}
 

@@ -73,6 +73,7 @@ func main() {
 			userID := loginVals.Username
 			password := loginVals.Password
 
+			// 登录校验 ， 初始化
 			if (userID == "admin" && password == "admin") || (userID == "test" && password == "test") {
 				return &User{
 					UserName:  userID,
@@ -84,11 +85,13 @@ func main() {
 			return nil, jwt.ErrFailedAuthentication
 		},
 		Authorizator: func(data interface{}, c *gin.Context) bool {
-			if v, ok := data.(*User); ok && v.UserName == "admin" {
-				return true
-			}
+			// 是否有权限访问校验
+			return true
+			// if v, ok := data.(*User); ok && v.UserName == "admin" {
+			// 	return true
+			// }
 
-			return false
+			// return false
 		},
 		Unauthorized: func(c *gin.Context, code int, message string) {
 			c.JSON(code, gin.H{

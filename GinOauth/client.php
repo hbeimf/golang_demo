@@ -49,8 +49,8 @@ class Test {
 	function adminLoginByName() {
 		$url = 'localhost:8000/login';
 		// username=admin password=admin
-		$post_data['username'] = 'admin';
-		$post_data['password'] = 'admin';
+		$post_data['username'] = 'test';
+		$post_data['password'] = 'test';
 
 		$res = $this->request_post($url, $post_data);
 		// print_r($res);

@@ -17,10 +17,10 @@ func Test() {
 	results, err := x.QueryString(SelectSql)
 
 	if err != nil {
-	        fmt.Println("err:", err)
+		fmt.Println("err:", err)
 	}
 
-	fmt.Println("results:", results)	
+	fmt.Println("results:", results)
 }
 
 // var usercols = []string{"id", "avatar", "account", "password", "salt", "name", "birthday", "sex", "email", "phone", "roleid", "deptid", "status", "createtime"}

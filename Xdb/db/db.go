@@ -37,15 +37,15 @@ func init() {
 	// 	log.Fatalf("db error: %#v\n", err.Error())
 	// }
 
-	// err = x.RegisterSqlTemplate(xorm.Default("./db/sql/tpl", ".sql"))
-	// if err != nil {
-	// 	log.Fatalf("db error: %#v\n", err.Error())
-	// }
+	err = x.RegisterSqlTemplate(xorm.Default("./db/sql/tpl", ".sql"))
+	if err != nil {
+		log.Fatalf("db error: %#v\n", err.Error())
+	}
 
-	// err = x.StartFSWatcher()
-	// if err != nil {
-	// 	log.Printf("sql parse error: %#v\n", err)
-	// }
+	err = x.StartFSWatcher()
+	if err != nil {
+		log.Printf("sql parse error: %#v\n", err)
+	}
 
 	err = x.Ping()
 	if err != nil {

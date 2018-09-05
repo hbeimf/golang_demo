@@ -9,12 +9,29 @@ class Test {
 	function run() {
 		$this->adminLoginByName();
 		$this->hello();
+		$this->refresh();
 	}
 
 	// http -f GET localhost:8000/auth/hello "Authorization:Bearer xxxxxxxxx"  "Content-Type: application/json"
 	function hello() {
 		// $url = 'localhost:8000/auth/auth/hello';
 		$url = 'localhost:8000/auth/hello';
+
+		$header = [];
+		$header[] = "Content-Type: application/json";
+		$header[] = "Authorization: Bearer " . $this->_token;
+
+		$post_data = [];
+		$res = $this->request_get_header($url, $header);
+
+		// print_r($res);
+		$arr = json_decode($res, true);
+		print_r($arr);
+
+	}
+
+	function refresh() {
+		$url = 'localhost:8000/auth/refresh_token';
 
 		$header = [];
 		$header[] = "Content-Type: application/json";

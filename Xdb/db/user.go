@@ -1,11 +1,12 @@
 package db
 
 import (
-	// "errors"
+	"errors"
 
 	// "github.com/angao/gin-xorm-admin/models"
 	// "github.com/angao/gin-xorm-admin/utils"
 	"fmt"
+	"golang_demo/Xdb/models"
 )
 
 // UserDao operate user
@@ -21,22 +22,43 @@ func Test() {
 	}
 
 	fmt.Println("results:", results)
+
+	user := UserDao{}
+	u, err := user.GetUser("test")
+
+	if err != nil {
+		fmt.Println("user:", u)
+	}
+
 }
 
-// var usercols = []string{"id", "avatar", "account", "password", "salt", "name", "birthday", "sex", "email", "phone", "roleid", "deptid", "status", "createtime"}
+//  CREATE TABLE `users` (
+//   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+//   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+//   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+//   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+//   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+//   `created_at` timestamp NULL DEFAULT NULL,
+//   `updated_at` timestamp NULL DEFAULT NULL,
+//   PRIMARY KEY (`id`),
+//   UNIQUE KEY `users_email_unique` (`email`)
+// ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+var usercols = []string{"id", "name", "email", "password", "remember_token", "created_at", "updated_at"}
 
 // // GetUser query user by account
-// func (UserDao) GetUser(account string) (*models.User, error) {
-// 	user := new(models.User)
-// 	has, err := x.Cols(usercols...).Where("account = ?", account).Get(user)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	if !has {
-// 		return nil, errors.New("user not found")
-// 	}
-// 	return user, nil
-// }
+func (UserDao) GetUser(name string) (*models.Users, error) {
+	users := new(models.Users)
+	has, err := x.Cols(usercols...).Where("name = ?", name).Get(users)
+	fmt.Println("user123 :", has)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, errors.New("user not found")
+	}
+	return users, nil
+}
 
 // GetUserByID query user by id
 // func (UserDao) GetUserByID(id int64) (*models.User, error) {

@@ -100,6 +100,9 @@ func (UserDao) GetUserByID(id int64) (*models.Users, error) {
 // }
 
 // // List query all user
+// SqlTemplateClient 's doc
+// https://www.kancloud.cn/xormplus/xorm/235732
+
 // func (UserDao) List(page models.Page) ([]models.Users, error) {
 // 	users := make([]models.Users, 0)
 // 	param := utils.StructToMap(page)

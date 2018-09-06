@@ -8,6 +8,8 @@ import (
 
 	"github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
+	"golang_demo/GinOauth/db"
+	"golang_demo/GinOauth/handler"
 )
 
 type login struct {
@@ -16,29 +18,6 @@ type login struct {
 }
 
 var identityKey = "id"
-
-func helloHandler(c *gin.Context) {
-	claims := jwt.ExtractClaims(c)
-	log.Printf("Hello claims: %#v\n", claims)
-	user, _ := c.Get(identityKey)
-
-	log.Printf("Hello user: %#v\n", user)
-
-	c.JSON(200, gin.H{
-		"userID":   claims["id"],
-		"userName": user.(*User).UserName,
-		"text":     "Hello World.",
-		"uid": claims["Uid"],
-	})
-}
-
-// User demo
-type User struct {
-	UserName  string
-	FirstName string
-	LastName  string
-	Uid  string
-}
 
 func main() {
 	port := os.Getenv("PORT")
@@ -58,25 +37,25 @@ func main() {
 		MaxRefresh:  time.Hour,
 		IdentityKey: identityKey,
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
-			if v, ok := data.(*User); ok {
+			if v, ok := data.(*db.UserDao); ok {
 				// 初始化 claims
 				return jwt.MapClaims{
 					identityKey: v.UserName,
 					"FirstName": v.FirstName,
-					"LastName": v.LastName,
-					"Uid": v.Uid,
+					"LastName":  v.LastName,
+					"Uid":       v.Uid,
 				}
 			}
 			return jwt.MapClaims{}
 		},
 		IdentityHandler: func(c *gin.Context) interface{} {
 			claims := jwt.ExtractClaims(c)
-			// 初始化 user 
-			return &User{
-				UserName: claims["id"].(string),
+			// 初始化 user
+			return &db.UserDao{
+				UserName:  claims["id"].(string),
 				FirstName: claims["FirstName"].(string),
-				LastName: claims["LastName"].(string),
-				Uid: claims["Uid"].(string),
+				LastName:  claims["LastName"].(string),
+				Uid:       claims["Uid"].(string),
 			}
 		},
 		Authenticator: func(c *gin.Context) (interface{}, error) {
@@ -89,11 +68,11 @@ func main() {
 
 			// 登录校验 ， 初始化
 			if (userID == "admin" && password == "admin") || (userID == "test" && password == "test") {
-				return &User{
+				return &db.UserDao{
 					UserName:  userID,
 					LastName:  "Bo" + userID,
 					FirstName: "Wu" + userID,
-					Uid: "123456"+userID,
+					Uid:       "123456" + userID,
 				}, nil
 			}
 
@@ -147,8 +126,9 @@ func main() {
 	auth := r.Group("/auth")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
-		auth.GET("/hello", helloHandler)
+		auth.GET("/hello", handler.HelloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+		// auth.GET("/hello", helloHandler)
 	}
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {

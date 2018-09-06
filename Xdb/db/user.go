@@ -110,21 +110,21 @@ func (UserDao) GetUserByID(id int64) (*models.Users, error) {
 // 	return users, nil
 // }
 
-// // Save is save one user
-// func (UserDao) Save(user models.User) error {
-// 	_, err := x.Insert(&user)
-// 	return err
-// }
+// Save is save one user
+func (UserDao) Save(user models.Users) error {
+	_, err := x.Insert(&user)
+	return err
+}
 
-// // Delete is delete a user
-// func (UserDao) Delete(id int64) error {
-// 	user := new(models.User)
-// 	_, err := x.Id(id).Delete(user)
-// 	return err
-// }
+// Delete is delete a user
+func (UserDao) Delete(id int64) error {
+	user := new(models.Users)
+	_, err := x.Id(id).Delete(user)
+	return err
+}
 
-// // Update user
-// func (UserDao) Update(user *models.User) error {
-// 	_, err := x.Id(user.ID).Cols(usercols...).Update(user)
-// 	return err
-// }
+// Update user
+func (UserDao) Update(user *models.Users) error {
+	_, err := x.Id(user.ID).Cols(usercols...).Update(user)
+	return err
+}

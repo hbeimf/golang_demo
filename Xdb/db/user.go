@@ -34,6 +34,16 @@ func Test() {
 	fmt.Println("the user:", u.Name)
 	fmt.Println("the user:", u.Email)
 
+	u1, err1 := user.GetUserByID(8)
+
+	if err1 != nil {
+		fmt.Println("err:", err)
+	} else {
+		fmt.Println("the user:", u1.ID)
+		fmt.Println("the user:", u1.Name)
+		fmt.Println("the user:", u1.Email)
+	}
+
 }
 
 //  CREATE TABLE `users` (
@@ -54,7 +64,6 @@ var usercols = []string{"id", "name", "email", "password", "remember_token", "cr
 func (UserDao) GetUser(name string) (*models.Users, error) {
 	users := new(models.Users)
 	has, err := x.Cols(usercols...).Where("name = ?", name).Get(users)
-	// fmt.Println("user123 :", users)
 	if err != nil {
 		return nil, err
 	}
@@ -65,17 +74,17 @@ func (UserDao) GetUser(name string) (*models.Users, error) {
 }
 
 // GetUserByID query user by id
-// func (UserDao) GetUserByID(id int64) (*models.User, error) {
-// 	user := new(models.User)
-// 	has, err := x.Cols(usercols...).Where("id = ?", id).Get(user)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	if !has {
-// 		return nil, errors.New("user not found")
-// 	}
-// 	return user, nil
-// }
+func (UserDao) GetUserByID(id int64) (*models.Users, error) {
+	user := new(models.Users)
+	has, err := x.Cols(usercols...).Where("id = ?", id).Get(user)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, errors.New("user not found")
+	}
+	return user, nil
+}
 
 // // GetUserRole query user by primary key
 // func (UserDao) GetUserRole(id int64) (*models.UserRole, error) {

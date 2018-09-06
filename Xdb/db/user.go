@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	// "github.com/angao/gin-xorm-admin/models"
-	// "github.com/angao/gin-xorm-admin/utils"
 	"fmt"
+	// "github.com/angao/gin-xorm-admin/utils"
 	"golang_demo/Xdb/models"
 )
 
@@ -100,8 +100,8 @@ func (UserDao) GetUserByID(id int64) (*models.Users, error) {
 // }
 
 // // List query all user
-// func (UserDao) List(page models.Page) ([]models.User, error) {
-// 	users := make([]models.User, 0)
+// func (UserDao) List(page models.Page) ([]models.Users, error) {
+// 	users := make([]models.Users, 0)
 // 	param := utils.StructToMap(page)
 // 	err := x.SqlTemplateClient("user.all.sql", &param).Find(&users)
 // 	if err != nil {

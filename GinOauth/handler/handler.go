@@ -11,6 +11,10 @@ import (
 
 var identityKey = "id"
 
+func RegisterHandler(c *gin.Context) {
+
+}
+
 func HelloHandler(c *gin.Context) {
 	claims := jwt.ExtractClaims(c)
 	log.Printf("Hello claims: %#v\n", claims)

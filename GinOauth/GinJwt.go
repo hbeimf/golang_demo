@@ -116,6 +116,7 @@ func main() {
 	}
 
 	r.POST("/login", authMiddleware.LoginHandler)
+	r.POST("/register", handler.RegisterHandler)
 
 	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		claims := jwt.ExtractClaims(c)

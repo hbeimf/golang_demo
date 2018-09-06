@@ -44,6 +44,14 @@ func Test() {
 		fmt.Println("the user:", u1.Email)
 	}
 
+	u2, err2 := user.Page()
+	if err2 != nil {
+		fmt.Println("err:", err)
+	} else {
+		fmt.Println("the user page:", u2)
+
+	}
+
 }
 
 //  CREATE TABLE `users` (
@@ -112,6 +120,17 @@ func (UserDao) GetUserByID(id int64) (*models.Users, error) {
 // 	}
 // 	return users, nil
 // }
+
+func (UserDao) Page() ([]models.Users, error) {
+	users := make([]models.Users, 0)
+	// param := utils.StructToMap(page)
+	param := map[string]interface{}{"count": 2, "id": 7, "name": ""}
+	err := x.SqlTemplateClient("user.all.sql", &param).Find(&users)
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
+}
 
 // Save is save one user
 func (UserDao) Save(user models.Users) error {

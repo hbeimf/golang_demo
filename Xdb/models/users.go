@@ -47,10 +47,10 @@ type Users struct {
 }
 
 // UserRole 用户角色
-// type UserRole struct {
-// 	User `xorm:"extends"`
-// 	Role `xorm:"extends"`
-// }
+type UserRole struct {
+	Users `xorm:"extends"`
+	Roles `xorm:"extends"`
+}
 
 // TableName set table
 func (Users) TableName() string {

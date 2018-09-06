@@ -46,9 +46,17 @@ func Test() {
 
 	u2, err2 := user.Page()
 	if err2 != nil {
-		fmt.Println("err:", err)
+		fmt.Println("err:", err2)
 	} else {
 		fmt.Println("the user page:", u2)
+
+	}
+
+	u3, err3 := user.GetUserRole(1)
+	if err3 != nil {
+		fmt.Println("err:", err3)
+	} else {
+		fmt.Println("the user role:", u3)
 
 	}
 
@@ -106,6 +114,18 @@ func (UserDao) GetUserByID(id int64) (*models.Users, error) {
 // 	}
 // 	return user, nil
 // }
+
+func (UserDao) GetUserRole(id int64) (*models.UserRole, error) {
+	user := new(models.UserRole)
+	has, err := x.Table("users").Join("INNER", "role_user", "users.id = role_user.user_id").Join("INNER", "roles", "roles.id = role_user.role_id").Where("users.id = ?", id).Get(user)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, errors.New("user not found")
+	}
+	return user, nil
+}
 
 // // List query all user
 // SqlTemplateClient 's doc

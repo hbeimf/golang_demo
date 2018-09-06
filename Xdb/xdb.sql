@@ -122,7 +122,7 @@ CREATE TABLE `role_user` (
   KEY `role_user_user_id_index` (`user_id`),
   CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,6 +131,7 @@ CREATE TABLE `role_user` (
 
 LOCK TABLES `role_user` WRITE;
 /*!40000 ALTER TABLE `role_user` DISABLE KEYS */;
+INSERT INTO `role_user` VALUES (1,1,1,NULL,NULL);
 /*!40000 ALTER TABLE `role_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,6 +161,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Admin','admin','',5,'2018-08-07 23:13:32','2018-08-07 23:13:32'),(3,'Client','client','',0,'2018-08-08 00:09:34','2018-08-08 00:09:34'),(4,'Test','test','',0,'2018-08-08 00:19:57','2018-08-08 00:19:57'),(5,'AtestRole','ATestRole','desc admin role',2,'2018-08-09 19:32:59','2018-08-09 19:32:59');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +191,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (8,'test','test@qq.com','test',NULL,NULL,NULL);
+INSERT INTO `users` VALUES (1,'test1','123456@qq.com','$2y$10$bXsmvgIs2o5qzvS1d8uBaONSdaKAG0/XDxnYEiY3xtLx/9SAz9x2C',NULL,'2018-08-07 18:14:00','2018-08-07 18:14:00'),(2,'test2','222222@qq.com','$2y$10$DOTon6DNQHmlvR5qdLmXyOTlJcE2CNKvUgwXwX0lg1prpcpTpqXta',NULL,'2018-08-07 18:16:00','2018-08-07 18:16:00'),(8,'test','test@qq.com','test',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -202,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-05 17:40:59
+-- Dump completed on 2018-09-06 13:17:23

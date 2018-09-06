@@ -48,8 +48,9 @@ type Users struct {
 
 // UserRole 用户角色
 type UserRole struct {
-	Users `xorm:"extends"`
-	Roles `xorm:"extends"`
+	Users    `xorm:"extends"`
+	Roles    `xorm:"extends"`
+	RoleUser `xorm:"extends"`
 }
 
 // TableName set table

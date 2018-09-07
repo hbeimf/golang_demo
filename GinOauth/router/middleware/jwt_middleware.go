@@ -56,16 +56,16 @@ func New() (*jwt.GinJWTMiddleware, error) {
 			if err := c.ShouldBind(&loginVals); err != nil {
 				return "", jwt.ErrMissingLoginValues
 			}
-			userID := loginVals.Username
+			userName := loginVals.Username
 			password := loginVals.Password
 
 			// 登录校验 ， 初始化
-			if (userID == "admin" && password == "admin") || (userID == "test" && password == "test") {
+			if (userName == "admin" && password == "admin") || (userName == "test" && password == "test") {
 				return &User{
-					UserName:  userID,
-					LastName:  "Bo" + userID,
-					FirstName: "Wu" + userID,
-					Uid:       "123456" + userID,
+					UserName:  userName,
+					LastName:  "Bo" + userName,
+					FirstName: "Wu" + userName,
+					Uid:       "123456" + userName,
 				}, nil
 			}
 

@@ -2,9 +2,6 @@ package router
 
 import (
 	"log"
-	"net/http"
-	"os"
-	// "time"
 
 	"github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
@@ -13,15 +10,10 @@ import (
 	"golang_demo/GinOauth/handler"
 )
 
-func Init() {
-	port := os.Getenv("PORT")
+func Init() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
-
-	if port == "" {
-		port = "8000"
-	}
 
 	// the jwt middleware
 	authMiddleware, err := middleware.New()
@@ -55,7 +47,5 @@ func Init() {
 		// adminGroup.GET("/hello", helloHandler)
 	}
 
-	if err := http.ListenAndServe(":"+port, router); err != nil {
-		log.Fatal(err)
-	}
+	return router
 }

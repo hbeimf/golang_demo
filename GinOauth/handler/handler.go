@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"golang_demo/GinOauth/db"
+	"golang_demo/GinOauth/router/middleware"
 )
 
 var identityKey = "id"
@@ -35,10 +36,9 @@ func HelloHandler(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"userID": claims["id"],
 		// "userName": user.(*db.UserDao).UserName,
-		// "userName": user.(*router.User).UserName,
-
-		"text": "Hello World.",
-		"uid":  claims["Uid"],
-		"info": u3,
+		"userName": user.(*middleware.User).UserName,
+		"text":     "Hello World.",
+		"uid":      claims["Uid"],
+		"info":     u3,
 	})
 }

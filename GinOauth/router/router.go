@@ -15,9 +15,9 @@ import (
 
 func Init() {
 	port := os.Getenv("PORT")
-	r := gin.New()
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
+	router := gin.New()
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
 
 	if port == "" {
 		port = "8000"
@@ -30,16 +30,16 @@ func Init() {
 		log.Fatal("JWT Error:" + err.Error())
 	}
 
-	r.POST("/login", authMiddleware.LoginHandler)
-	r.POST("/register", handler.RegisterHandler)
+	router.POST("/login", authMiddleware.LoginHandler)
+	router.POST("/register", handler.RegisterHandler)
 
-	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
+	router.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		claims := jwt.ExtractClaims(c)
 		log.Printf("NoRoute claims: %#v\n", claims)
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
 
-	adminGroup := r.Group("/api/admin")
+	adminGroup := router.Group("/api/admin")
 	adminGroup.Use(authMiddleware.MiddlewareFunc())
 	{
 		adminGroup.GET("/hello", handler.HelloHandler)
@@ -47,7 +47,7 @@ func Init() {
 		// adminGroup.GET("/hello", helloHandler)
 	}
 
-	clientGroup := r.Group("/api/client")
+	clientGroup := router.Group("/api/client")
 	clientGroup.Use(authMiddleware.MiddlewareFunc())
 	{
 		clientGroup.GET("/hello", handler.HelloHandler)
@@ -55,7 +55,7 @@ func Init() {
 		// adminGroup.GET("/hello", helloHandler)
 	}
 
-	if err := http.ListenAndServe(":"+port, r); err != nil {
+	if err := http.ListenAndServe(":"+port, router); err != nil {
 		log.Fatal(err)
 	}
 }

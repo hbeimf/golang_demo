@@ -13,20 +13,6 @@ import (
 	"golang_demo/GinOauth/handler"
 )
 
-type login struct {
-	Username string `form:"username" json:"username" binding:"required"`
-	Password string `form:"password" json:"password" binding:"required"`
-}
-
-type User struct {
-	UserName  string
-	FirstName string
-	LastName  string
-	Uid       string
-}
-
-var identityKey = "id"
-
 func Init() {
 	port := os.Getenv("PORT")
 	r := gin.New()

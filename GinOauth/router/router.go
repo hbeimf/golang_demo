@@ -4,16 +4,22 @@ import (
 	"log"
 
 	"github.com/appleboy/gin-jwt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"golang_demo/GinOauth/router/middleware"
 
 	"golang_demo/GinOauth/handler"
+	"golang_demo/GinOauth/router/middleware"
 )
 
 func Init() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://baidu.com"}
+	// config.AllowOrigins == []string{"http://baidu.com", "http://baidu1.com"}
+	router.Use(cors.New(config))
 
 	// the jwt middleware
 	authMiddleware, err := middleware.New()

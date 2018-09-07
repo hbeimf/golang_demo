@@ -39,12 +39,20 @@ func Init() {
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
 
-	auth := r.Group("/auth")
-	auth.Use(authMiddleware.MiddlewareFunc())
+	adminGroup := r.Group("/api/admin")
+	adminGroup.Use(authMiddleware.MiddlewareFunc())
 	{
-		auth.GET("/hello", handler.HelloHandler)
-		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
-		// auth.GET("/hello", helloHandler)
+		adminGroup.GET("/hello", handler.HelloHandler)
+		adminGroup.GET("/refresh_token", authMiddleware.RefreshHandler)
+		// adminGroup.GET("/hello", helloHandler)
+	}
+
+	clientGroup := r.Group("/api/client")
+	clientGroup.Use(authMiddleware.MiddlewareFunc())
+	{
+		clientGroup.GET("/hello", handler.HelloHandler)
+		clientGroup.GET("/refresh_token", authMiddleware.RefreshHandler)
+		// adminGroup.GET("/hello", helloHandler)
 	}
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {

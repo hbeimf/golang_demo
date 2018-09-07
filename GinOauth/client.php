@@ -15,7 +15,7 @@ class Test {
 	// http -f GET localhost:8000/auth/hello "Authorization:Bearer xxxxxxxxx"  "Content-Type: application/json"
 	function hello() {
 		// $url = 'localhost:8000/auth/auth/hello';
-		$url = 'localhost:8000/auth/hello';
+		$url = 'localhost:8000/api/admin/hello';
 
 		$header = [];
 		$header[] = "Content-Type: application/json";
@@ -31,7 +31,7 @@ class Test {
 	}
 
 	function refresh() {
-		$url = 'localhost:8000/auth/refresh_token';
+		$url = 'localhost:8000/api/admin/refresh_token';
 
 		$header = [];
 		$header[] = "Content-Type: application/json";

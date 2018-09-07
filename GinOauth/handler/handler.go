@@ -7,7 +7,6 @@ import (
 	"log"
 
 	"golang_demo/GinOauth/db"
-	// "golang_demo/GinOauth/router"
 )
 
 var identityKey = "id"

@@ -8,7 +8,6 @@ import (
 
 	"github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
-	// "golang_demo/GinOauth/db"
 	"golang_demo/GinOauth/router/middleware"
 
 	"golang_demo/GinOauth/handler"

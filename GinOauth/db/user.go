@@ -3,9 +3,7 @@ package db
 import (
 	"errors"
 
-	// "github.com/angao/gin-xorm-admin/models"
 	"fmt"
-	// "github.com/angao/gin-xorm-admin/utils"
 	"golang_demo/Xdb/models"
 )
 

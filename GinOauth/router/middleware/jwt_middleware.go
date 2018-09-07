@@ -1,16 +1,10 @@
 package middleware
 
 import (
-	// "log"
-	// "net/http"
-	// "os"
-	// "errors"
 	"time"
 
 	"github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
-	// "golang_demo/GinOauth/db"
-	// "golang_demo/GinOauth/handler"
 )
 
 type login struct {

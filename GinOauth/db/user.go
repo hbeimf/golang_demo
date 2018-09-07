@@ -11,10 +11,6 @@ import (
 
 // UserDao operate user
 type UserDao struct {
-	UserName  string
-	FirstName string
-	LastName  string
-	Uid       string
 }
 
 func Test() {

@@ -16,6 +16,7 @@ func Init() *gin.Engine {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
+	// 允许垮域访问
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"http://baidu.com"}
 	// config.AllowOrigins == []string{"http://baidu.com", "http://baidu1.com"}

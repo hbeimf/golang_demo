@@ -12,7 +12,9 @@ import (
 
 var identityKey = "id"
 
+// https://www.wafunny.com/blog/go/gin/gin.html
 func RegisterHandler(c *gin.Context) {
+	// name := c.DefaultPostForm("name")
 
 }
 

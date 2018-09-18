@@ -4,7 +4,14 @@ import (
 	"log"
 )
 
+type School struct {
+	sid        int
+	name       string
+	class_room map[int]*ClassRoom
+}
+
 type ClassRoom struct {
+	cid     int
 	student map[int]*Student
 }
 
@@ -17,11 +24,11 @@ func (c *ClassRoom) Get(uid int) *Student {
 }
 
 type Student struct {
-	uid     int
-	gid     int
-	name    string
-	address string
-	age     int
+	uid           int
+	class_room_id int
+	name          string
+	address       string
+	age           int
 }
 
 func main() {
@@ -30,7 +37,7 @@ func main() {
 
 	var s *Student = new(Student)
 	s.uid = 101
-	s.gid = 1
+	s.class_room_id = 1
 	s.name = "Mikle"
 	s.address = "红旗南路"
 	s.age = 18

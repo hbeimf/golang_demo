@@ -4,16 +4,16 @@ import (
 	"log"
 )
 
-type Students struct {
+type ClassRoom struct {
 	student map[int]*Student
 }
 
-func (ss *Students) Set(s *Student) {
-	ss.student[s.uid] = s
+func (c *ClassRoom) Set(s *Student) {
+	c.student[s.uid] = s
 }
 
-func (ss *Students) Get(uid int) *Student {
-	return ss.student[uid]
+func (c *ClassRoom) Get(uid int) *Student {
+	return c.student[uid]
 }
 
 type Student struct {
